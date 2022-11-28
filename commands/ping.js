@@ -5,6 +5,11 @@ module.exports = {
     .setName('ping')
     .setDescription('Replies with pong!'),
     async execute(interaction) {
-        await interaction.reply('Pong!');
+        await interaction.reply({content: 'Pong!', fetchReply: true }).then(msg => {
+            let time = msg.createdTimestamp - interaction.createdTimestamp;
+            
+            msg.edit(`${msg.toString()} \`${time} ms\``);
+            console.log(`\tPing took ${time} ms`);
+        });
     }
 }
